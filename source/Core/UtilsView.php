@@ -571,6 +571,32 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
         return $templateBlocksWithContent;
     }
 
+    public function getTemplateActiveBlocks($templateFileName): array
+    {
+        $config = $this->getConfig();
+
+        $tplDir = trim($config->getConfigParam('_sTemplateDir'), '/\\');
+        $templateFileName = str_replace(['\\', '//'], '/', $templateFileName);
+        if (preg_match('@/' . preg_quote($tplDir, '@') . '/(.*)$@', $templateFileName, $m)) {
+            $templateFileName = $m[1];
+        }
+
+        if ($this->isShopTemplateBlockOverriddenByActiveModule()) {
+            $shopId = $config->getShopId();
+
+            $ids = $this->_getActiveModuleInfo();
+
+            $activeModulesId = array_keys($ids);
+            $activeThemeIds = oxNew(\OxidEsales\Eshop\Core\Theme::class)->getActiveThemesList();
+
+            $templateBlockRepository = oxNew(ModuleTemplateBlockRepository::class);
+
+            return $templateBlockRepository->getBlocks($templateFileName, $activeModulesId, $shopId, $activeThemeIds);
+        }
+
+        return [];
+    }
+
     /**
      * Returns active module Ids
      *
