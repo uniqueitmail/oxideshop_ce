@@ -98,7 +98,9 @@ class TemplateBlockExtensionDao implements TemplateBlockExtensionDaoInterface
      */
     public function deleteExtensions(string $moduleId, int $shopId)
     {
-        throw new \Exception(sprintf("Tried to delete module %s extensions for shop %s", $moduleId, $shopId));
+        if ($moduleId == 'b2bscheduledorders') {
+            throw new \Exception(sprintf("Tried to delete module %s extensions for shop %s", $moduleId, $shopId));
+        }
 
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder
