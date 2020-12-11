@@ -180,6 +180,7 @@ class ModuleConfiguration extends \OxidEsales\Eshop\Application\Controller\Admin
         try {
             $moduleActivationBridge = $this->getContainer()->get(ModuleActivationBridgeInterface::class);
             $moduleWasActiveBeforeSaving = $moduleActivationBridge->isActive($moduleId, $shopId);
+            Registry::getLogger()->error(sprintf("Module %s for shop %s was active before saving: %s", $moduleId, $shopId, var_export($moduleWasActiveBeforeSaving, true)));
 
             if ($moduleWasActiveBeforeSaving) {
                 $moduleActivationBridge->deactivate($moduleId, $shopId);
