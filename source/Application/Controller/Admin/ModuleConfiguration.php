@@ -194,7 +194,7 @@ class ModuleConfiguration extends \OxidEsales\Eshop\Application\Controller\Admin
             }
         } catch (\Throwable $throwable) {
             Registry::getUtilsView()->addErrorToDisplay($throwable);
-            Registry::getLogger()->error($throwable->getMessage());
+            Registry::getLogger()->error($throwable->getMessage() . "\n" . $throwable->getTraceAsString());
         }
     }
 
