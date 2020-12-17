@@ -98,7 +98,7 @@ class ShopEnvironmentConfigurationDao implements ShopEnvironmentConfigurationDao
         $path = $this->getEnvironmentConfigurationFilePath($shopId);
 
         if ($this->fileSystem->exists($path)) {
-            $this->fileSystem->rename($path, sprintf("%s.%s.bak", $path, bin2hex(random_bytes(16))), true);
+            rename($path, $path . '.bak');
         }
     }
 
