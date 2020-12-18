@@ -98,7 +98,11 @@ class ShopEnvironmentConfigurationDao implements ShopEnvironmentConfigurationDao
         $path = $this->getEnvironmentConfigurationFilePath($shopId);
 
         if ($this->fileSystem->exists($path)) {
+            set_error_handler(function () {
+                throw new \Exception(func_get_arg(1));
+            });
             rename($path, $path . '.bak');
+            restore_error_handler();
         }
     }
 
