@@ -50,7 +50,7 @@ class PaginationSeoTest extends \OxidEsales\TestingLibrary\UnitTestCase
     /**
      * Sets up test
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
 
@@ -72,7 +72,7 @@ class PaginationSeoTest extends \OxidEsales\TestingLibrary\UnitTestCase
     /**
      * Tear down test.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         //restore theme, do it directly in database as it might be dummy 'basic' theme
         $query = "UPDATE `oxconfig` SET `OXVARVALUE` = encode('" . $this->origTheme . "', 'fq45QS09_fqyx09239QQ') WHERE `OXVARNAME` = 'sTheme'";

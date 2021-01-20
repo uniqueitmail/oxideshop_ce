@@ -14,7 +14,7 @@ class LanguageexceptionTest extends \OxidEsales\TestingLibrary\UnitTestCase
     /**
      * Initialize the fixture.
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
         $this->testObject = oxNew(\OxidEsales\Eshop\Core\Exception\LanguageException::class, $this->message);

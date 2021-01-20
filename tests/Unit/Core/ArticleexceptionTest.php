@@ -37,7 +37,7 @@ class ArticleexceptionTest extends \OxidEsales\TestingLibrary\UnitTestCase
      *
      * @return null
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
         $this->_oTestObject = oxNew('oxArticleException', $this->_sMsg);

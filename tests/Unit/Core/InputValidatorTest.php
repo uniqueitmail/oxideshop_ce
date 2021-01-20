@@ -34,7 +34,7 @@ class InputValidatorTest extends \OxidEsales\TestingLibrary\UnitTestCase
      *
      * @return null
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
         $this->_oValidator = oxNew('oxInputValidator', 'core');

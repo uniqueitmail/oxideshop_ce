@@ -1,7 +1,7 @@
 <?php
 namespace OxidEsales\EshopProfessional\Migrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 class Version_pe extends AbstractMigration

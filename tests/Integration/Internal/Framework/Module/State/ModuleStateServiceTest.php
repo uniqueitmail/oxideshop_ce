@@ -21,7 +21,7 @@ class ModuleStateServiceTest extends TestCase
 
     private $moduleStateService;
 
-    public function setUp()
+    public function setup(): void
     {
         $this->moduleStateService = $this->get(ModuleStateServiceInterface::class);
 

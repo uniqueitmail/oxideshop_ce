@@ -223,7 +223,7 @@ class BaseTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function setup()
+    protected function setup(): void
     {
         self::$count++;
 
@@ -246,7 +246,7 @@ class BaseTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->cleanUpTable('oxactions');
         $this->cleanUpTable('oxattribute');

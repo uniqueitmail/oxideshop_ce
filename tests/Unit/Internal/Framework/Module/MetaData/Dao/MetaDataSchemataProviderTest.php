@@ -78,7 +78,7 @@ class MetaDataSchemataProviderTest extends TestCase
         $metaDataSchema->getMetaDataSchemaForVersion($unsupportedVersion);
     }
 
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
         $this->schemaVersion20 = [

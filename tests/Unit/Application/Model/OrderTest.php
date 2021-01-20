@@ -47,7 +47,7 @@ class OrderTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function setup()
+    protected function setup(): void
     {
         parent::setUp();
         $this->getConfig()->setConfigParam('blPerfNoBasketSaving', true);
@@ -58,7 +58,7 @@ class OrderTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         oxRemClassModule('Unit\Application\Model\modoxdeliverylist_oxorder');
         $this->cleanUpTable('oxorder');

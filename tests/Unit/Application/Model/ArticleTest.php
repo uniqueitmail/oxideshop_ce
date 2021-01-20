@@ -48,7 +48,7 @@ class ArticleTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
 
@@ -63,7 +63,7 @@ class ArticleTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->getConfig()->setGlobalParameter('listtype', null);
 
@@ -562,7 +562,7 @@ class ArticleTest extends \OxidTestCase
      *
      * @return null
      */
-    public function testGetSqlActiveSnippetIfParentWillBeLoadedOnSpecialItsVariantsSetup()
+    public function testGetSqlActiveSnippetIfParentWillBeLoadedOnSpecialItsVariantssetup(): void
     {
         $sArticleId = '_testArticleId';
         $sShopId = $this->getConfig()->getShopId();

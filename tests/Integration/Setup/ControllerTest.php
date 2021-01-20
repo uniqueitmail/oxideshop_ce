@@ -31,7 +31,7 @@ class ControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
     /**
      * The standard set up method.
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
 
@@ -41,7 +41,7 @@ class ControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
     /**
      * The standard tear down method.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->unsetPost();
 

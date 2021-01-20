@@ -40,7 +40,7 @@ class RappingTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
         $this->sTableName = getViewName("oxwrapping");
@@ -128,7 +128,7 @@ class RappingTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $myConfig = $this->getConfig();
         $this->getConfig()->setConfigParam('blEnterNetPrice', false);

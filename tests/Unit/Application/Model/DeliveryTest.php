@@ -68,7 +68,7 @@ class DeliveryTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
         oxAddClassModule(\OxidEsales\EshopCommunity\Tests\Unit\Application\Model\modOxDelivery::class, 'oxDelivery');
@@ -139,7 +139,7 @@ class DeliveryTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         oxRemClassModule(\OxidEsales\EshopCommunity\Tests\Unit\Application\Model\modOxDelivery::class);
 

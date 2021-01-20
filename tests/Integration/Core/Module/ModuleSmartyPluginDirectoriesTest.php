@@ -22,7 +22,7 @@ class ModuleSmartyPluginDirectoriesTest extends TestCase
 {
     private $container;
 
-    public function setUp()
+    public function setup(): void
     {
         $this->container = ContainerFactory::getInstance()->getContainer();
 
@@ -33,7 +33,7 @@ class ModuleSmartyPluginDirectoriesTest extends TestCase
         $this->activateTestModule();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->deactivateTestModule();
 

@@ -17,7 +17,7 @@ class UtilsServerTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->getConfig()->setConfigParam("aTrustedIPs", array());
         parent::tearDown();
@@ -142,7 +142,7 @@ class UtilsServerTest extends \OxidTestCase
         $this->assertTrue($oUtilsServer->isTrustedClientIp());
     }
 
-    public function testGetCookiePathWhenACookiePathsIsSetUp()
+    public function testGetCookiePathWhenACookiePathsIssetup(): void
     {
         $sShopId = $this->getConfig()->getShopId();
         $this->getConfig()->setConfigParam("aCookiePaths", array($sShopId => 'somepath'));
@@ -151,7 +151,7 @@ class UtilsServerTest extends \OxidTestCase
         $this->assertEquals('somepath', $oUtilsServer->UNITgetCookiePath(""));
     }
 
-    public function testGetCookieDomainWhenACookieDomainsIsSetUp()
+    public function testGetCookieDomainWhenACookieDomainsIssetup(): void
     {
         $sShopId = $this->getConfig()->getShopId();
         $this->getConfig()->setConfigParam("aCookieDomains", array($sShopId => 'somedomain'));

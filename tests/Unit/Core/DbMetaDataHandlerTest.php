@@ -14,7 +14,7 @@ class DbMetaDataHandlerTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
     }
@@ -24,7 +24,7 @@ class DbMetaDataHandlerTest extends \OxidTestCase
      *
      * @return null
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->cleanUpTable('oxactions');
 

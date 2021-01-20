@@ -1221,7 +1221,7 @@ class ShopSetUpTest extends FrontendTestCase
         $contents = <<<'EOL'
 <?php
 namespace OxidEsales\EshopCommunity\Migrations;
-use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 class Version20170101 extends AbstractMigration {
 public function up(Schema $schema) {$this->addSql('INVALID_SQL_SYNTAX');}

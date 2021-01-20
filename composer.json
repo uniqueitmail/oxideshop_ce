@@ -6,7 +6,7 @@
     "homepage": "https://www.oxid-esales.com/en/home.html",
     "license": "GPL-3.0-only",
     "require": {
-        "php": "^7.1",
+        "php": "^7.1 || ^8.0",
         "ext-pdo": "*",
         "ext-json": "*",
         "phpmailer/phpmailer": "^v6.1.6",
@@ -24,19 +24,19 @@
         "symfony/console": "^v3.4.15",
         "webmozart/path-util": "^2.3",
         "symfony/finder": "^3.4",
-        "symfony/filesystem": "^3.4",
+        "symfony/filesystem": "^4.4.17",
         "oxid-esales/flow-theme": "^v3.4.1",
-        "oxid-esales/oxideshop-doctrine-migration-wrapper": "^v3.1.0",
+        "oxid-esales/oxideshop-doctrine-migration-wrapper": "dev-b-3.x-update_php-OXDEV-4223",
         "oxid-esales/oxideshop-db-views-generator": "^v1.2.0",
-        "oxid-esales/oxideshop-demodata-installer": "^v1.1.2",
-        "oxid-esales/oxideshop-composer-plugin": "^v5.0.1",
-        "oxid-esales/oxideshop-unified-namespace-generator": "^2.0.0",
-        "oxid-esales/oxideshop-facts": "^2.3.1"
+        "oxid-esales/oxideshop-demodata-installer": "dev-b-6.2.x-update_php-OXDEV-4223",
+        "oxid-esales/oxideshop-composer-plugin": "dev-b-6.x-update_php-OXDEV-4223",
+        "oxid-esales/oxideshop-unified-namespace-generator": "dev-b-1.x-update_php-OXDEV-4223",
+        "oxid-esales/oxideshop-facts": "dev-b-2.x-update_php-OXDEV-4223"
     },
     "require-dev": {
-        "oxid-esales/testing-library": "dev-b-6.2.x",
+        "oxid-esales/testing-library": "dev-b-6.2.x-update_php-OXDEV-4223",
         "incenteev/composer-parameter-handler": "~v2.0",
-        "oxid-esales/oxideshop-ide-helper": "^4.0",
+        "oxid-esales/oxideshop-ide-helper": "dev-b-6.2.x-update_php-OXDEV-4223",
         "oxid-esales/azure-theme": "^v1.4.1",
         "squizlabs/php_codesniffer": "^3.5.4"
     },
