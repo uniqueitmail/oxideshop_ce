@@ -53,7 +53,7 @@ class ShopSetUpTest extends FrontendTestCase
     /** @var int How much more time wait for these tests. */
     protected $_iWaitTimeMultiplier = 7;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->preventModuleVersionNotify = false;
         parent::setUp();
@@ -61,7 +61,7 @@ class ShopSetUpTest extends FrontendTestCase
         $this->restoreModifiedFiles();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->restoreModifiedFiles();
 
@@ -737,7 +737,7 @@ class ShopSetUpTest extends FrontendTestCase
      *
      * @group setup
      */
-    public function testSystemRequirementsPageCanContinueWithSetup()
+    public function testSystemRequirementsPageCanContinueWithsetUp(): void
     {
         $this->goToSetup();
         $this->assertTextNotPresent(
@@ -825,7 +825,7 @@ class ShopSetUpTest extends FrontendTestCase
     /**
      * Check if shop automatically redirects to setup when you're trying to set it up for the first time
      */
-    public function goToSetup()
+    public function goTosetUp(): void
     {
         if (!$this->isPackage()) {
             $sUrl = $this->getTestConfig()->getShopUrl() . 'Setup/index.php?istep=100';
