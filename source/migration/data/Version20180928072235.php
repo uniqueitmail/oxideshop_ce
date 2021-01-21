@@ -62,4 +62,9 @@ class Version20180928072235 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

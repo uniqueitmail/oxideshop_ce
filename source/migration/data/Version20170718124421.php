@@ -33,4 +33,9 @@ class Version20170718124421 extends AbstractMigration
     public function down(Schema $schema): void
     {
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

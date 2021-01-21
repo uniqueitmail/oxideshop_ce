@@ -21,4 +21,9 @@ final class Version20201103010101 extends AbstractMigration
         $table = $schema->getTable('oxdeliveryset');
         $table->dropColumn('OXTRACKINGURL');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }
