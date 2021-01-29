@@ -23,7 +23,7 @@ class ExecutorTest extends TestCase
     {
         $output = $this->executeCommand('list');
 
-        $this->assertMatchesRegularExpression('/oe:tests:test-command/', $this->getOutputFromStream($output));
+        $this->assertRegExp('/oe:tests:test-command/', $this->getOutputFromStream($output));
     }
 
     public function testCommandExecution()

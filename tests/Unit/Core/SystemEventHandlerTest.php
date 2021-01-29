@@ -140,7 +140,7 @@ class SystemEventHandlerTest extends \OxidEsales\TestingLibrary\UnitTestCase
 
         $checkTime = $this->getConfigParam('sOnlineLicenseCheckTime');
         $this->assertNotNull($checkTime);
-        $this->assertMatchesRegularExpression('/\d{1,2}:\d{1,2}:\d{1,2}/', $checkTime);
+        $this->assertRegExp('/\d{1,2}:\d{1,2}:\d{1,2}/', $checkTime);
 
         return $checkTime;
     }

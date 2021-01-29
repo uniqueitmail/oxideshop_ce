@@ -2954,7 +2954,7 @@ class BasketTest extends \OxidTestCase
         //asserting first discount values
         $this->assertEquals('Test discount title 2', $aDiscounts['_testDiscountId2']->sDiscount);
         //checking 15 % discount (discountable items price = 79.5)
-        $this->assertEquals(11.925, $aDiscounts['_testDiscountId2']->dDiscount, '', 0.0001);
+        $this->assertEqualsWithDelta(11.925, $aDiscounts['_testDiscountId2']->dDiscount, 0.0001);
     }
 
     /**

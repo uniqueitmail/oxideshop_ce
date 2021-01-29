@@ -17,6 +17,6 @@ class AdminLogSqlDecoratorTest extends UnitTestCase
         // check if wrapping of string to inserting sql works
         $originalTestString = 'somestring';
         $expectedPattern = "@^insert into .*?'" . $originalTestString . "'\)@s";
-        $this->assertMatchesRegularExpression($expectedPattern, $decorator->prepareSqlForLogging($originalTestString));
+        $this->assertRegExp($expectedPattern, $decorator->prepareSqlForLogging($originalTestString));
     }
 }

@@ -245,7 +245,7 @@ class DbMetaDataHandlerTest extends \OxidTestCase
         $oDbMeta = $this->getProxyClass("oxDbMetaDataHandler");
 
         //comparing in case insensitive form
-        $this->assertEquals($sTestSql, $oDbMeta->UNITgetCreateTableSetSql("oxcountry", 8), '', 0, 10, false, true);
+        $this->assertEqualsIgnoringCase($sTestSql, $oDbMeta->UNITgetCreateTableSetSql("oxcountry", 8));
     }
 
     /**
