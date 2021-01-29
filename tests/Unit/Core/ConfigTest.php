@@ -59,12 +59,7 @@ class ConfigTest extends \OxidTestCase
     protected $_aShops = array();
     private $shopUrl = 'http://www.example.com/';
 
-    /**
-     * Initialize the fixture.
-     *
-     * @return null
-     */
-    protected function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->getConfig()->sTheme = false;
@@ -77,11 +72,6 @@ class ConfigTest extends \OxidTestCase
         $theme->activate();
     }
 
-    /**
-     * Tear down the fixture.
-     *
-     * @return null
-     */
     protected function tearDown(): void
     {
         oxRegistry::getLang()->setBaseLanguage(1);
@@ -120,7 +110,7 @@ class ConfigTest extends \OxidTestCase
     {
         oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return null; } else { return array( "HTTP_X_FORWARDED_SERVER" => "sslsites.de" ); } }');
 
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'), array(), '', false);
+        $oConfig = $this->getMock(Config::class, array('getConfigParam'), array(), '', false);
         $oConfig->expects($this->never())->method('getConfigParam');
         $this->assertTrue($oConfig->isSsl());
     }
@@ -132,7 +122,7 @@ class ConfigTest extends \OxidTestCase
     {
         oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return null; } else { return array(); } }');
 
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
+        $oConfig = $this->getMock(Config::class, array('getConfigParam'));
         $oConfig->expects($this->never())->method('getConfigParam');
 
         $this->assertFalse($oConfig->isSsl());
@@ -145,7 +135,7 @@ class ConfigTest extends \OxidTestCase
     {
         oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
 
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
+        $oConfig = $this->getMock(Config::class, array('getConfigParam'));
         $oConfig->expects($this->at(0))->method('getConfigParam')->with($this->equalTo('sSSLShopURL'))->will($this->returnValue(''));
         $oConfig->expects($this->at(1))->method('getConfigParam')->with($this->equalTo('sMallSSLShopURL'))->will($this->returnValue(''));
 
@@ -159,7 +149,7 @@ class ConfigTest extends \OxidTestCase
     {
         oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
 
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
+        $oConfig = $this->getMock(Config::class, array('getConfigParam'));
         $oConfig->expects($this->once())->method('getConfigParam')->with($this->equalTo('sSSLShopURL'))->will($this->returnValue('https://eshop/'));
 
         $this->assertTrue($oConfig->isSsl());
@@ -173,7 +163,7 @@ class ConfigTest extends \OxidTestCase
     {
         oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
 
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
+        $oConfig = $this->getMock(Config::class, array('getConfigParam'));
         $oConfig->expects($this->at(0))->method('getConfigParam')->with($this->equalTo('sSSLShopURL'))->will($this->returnValue(''));
         $oConfig->expects($this->at(1))->method('getConfigParam')->with($this->equalTo('sMallSSLShopURL'))->will($this->returnValue('https://subshop/'));
 
@@ -189,7 +179,7 @@ class ConfigTest extends \OxidTestCase
     {
         oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
 
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
+        $oConfig = $this->getMock(Config::class, array('getConfigParam'));
         $oConfig->expects($this->at(0))->method('getConfigParam')->with($this->equalTo('sSSLShopURL'))->will($this->returnValue('https://eshop'));
         $this->assertTrue($oConfig->isSsl());
 
@@ -226,10 +216,10 @@ class ConfigTest extends \OxidTestCase
      */
     private function isHttpsOnlySameUrl($withSsl)
     {
-        $config = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isSsl', 'getSslShopUrl', 'getShopUrl'));
+        $config = $this->getMock(Config::class, array('isSsl', 'getSslShopUrl', 'getShopUrl'));
         $config->expects($this->any())->method('isSsl')->will($this->returnValue($withSsl));
         foreach (['getSslShopUrl', 'getShopUrl'] as $method) {
-            $config->expects($this->any())->method($method)->will($this->returnValue('http'. ($withSsl?'s':'') . '://oxid-esales.com'));
+            $config->expects($this->any())->method($method)->will($this->returnValue('http' . ($withSsl ? 's' : '') . '://oxid-esales.com'));
         }
         $res = $config->isHttpsOnly();
         return $res;
@@ -237,14 +227,14 @@ class ConfigTest extends \OxidTestCase
 
     public function testIsUtfWhenInISOMode()
     {
-        $config = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
+        $config = $this->getMock(Config::class, array('getConfigParam'));
         $config->expects($this->any())->method('getConfigParam')->with($this->equalTo('iUtfMode'))->will($this->returnValue(0));
         $this->assertFalse($config->isUtf());
     }
 
     public function testIsUtfWhenInUtfMode()
     {
-        $config = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
+        $config = $this->getMock(Config::class, array('getConfigParam'));
         $config->expects($this->any())->method('getConfigParam')->with($this->equalTo('iUtfMode'))->will($this->returnValue(1));
         $this->assertTrue($config->isUtf());
     }
@@ -292,7 +282,7 @@ class ConfigTest extends \OxidTestCase
     /**
      * When a DatabaseException is thrown, method handleDatabaseException on the ExceptionHandler is called
      *
-     * @covers \OxidEsales\EshopCommunity\Core\Config::init()
+     * @covers \OxidEsales\Eshop\Core\Config::init()
      */
     public function testInitCallesExceptionHandlerOnDatabaseException()
     {
@@ -549,7 +539,7 @@ class ConfigTest extends \OxidTestCase
         $oConfig->init();
 
         $sQ = 'select oxproductive from oxshops where oxid = "' . $oConfig->getShopID() . '"';
-        $blProductive = ( bool ) oxDb::getDb()->getOne($sQ);
+        $blProductive = (bool) oxDb::getDb()->getOne($sQ);
 
         $this->assertEquals($blProductive, $oConfig->isProductiveMode());
     }
@@ -627,7 +617,7 @@ class ConfigTest extends \OxidTestCase
     public function testSetConfVarFromDb()
     {
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array("setConfigParam"));
+        $oConfig = $this->getMock(Config::class, array("setConfigParam"));
         $oConfig->expects($this->at(0))->method('setConfigParam')
             ->with(
                 $this->equalTo("test1"),
@@ -1379,7 +1369,7 @@ class ConfigTest extends \OxidTestCase
      */
     public function testGetCoreUtilsUrl()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getCurrentShopUrl'));
+        $oConfig = $this->getMock(Config::class, array('getCurrentShopUrl'));
         $oConfig->expects($this->any())->method('getCurrentShopUrl')->will($this->returnValue('xxx/'));
         $this->assertEquals('xxx/Core/utils/', $oConfig->getCoreUtilsUrl());
     }
@@ -1401,7 +1391,7 @@ class ConfigTest extends \OxidTestCase
     public function testGetCurrentShopUrlNoSsl()
     {
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isSsl'));
+        $oConfig = $this->getMock(Config::class, array('isSsl'));
         $oConfig->expects($this->any())->method('isSsl')->will($this->returnValue(false));
         $oConfig->init();
         $this->assertEquals($oConfig->getShopUrl(), $oConfig->getCurrentShopUrl());
@@ -1453,7 +1443,7 @@ class ConfigTest extends \OxidTestCase
     public function testGetImageDirNativeImagesIsSsl()
     {
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin', 'isSsl'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin', 'isSsl'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->expects($this->any())->method('isSsl')->will($this->returnValue(false));
         $oConfig->init();
@@ -1467,7 +1457,7 @@ class ConfigTest extends \OxidTestCase
     public function testGetImageDirDefaultLanguage()
     {
         oxRegistry::getLang()->setBaseLanguage(999);
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->init();
 
@@ -1559,7 +1549,7 @@ class ConfigTest extends \OxidTestCase
 
     public function testGetSslShopUrlByLanguageArrayAddsEndingSlash()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->init();
         $oConfig->setConfigParam('aLanguageSSLURLs', array(5 => 'http://www.example.com'));
@@ -1679,7 +1669,7 @@ class ConfigTest extends \OxidTestCase
     public function testGetShopCurrentUrlNoSsl()
     {
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isSsl'));
+        $oConfig = $this->getMock(Config::class, array('isSsl'));
         $oConfig->expects($this->any())->method('isSsl')->will($this->returnValue(false));
         $oConfig->init();
         $oConfig->setConfigParam('sShopURL', 'http://www.example.com/');
@@ -1692,7 +1682,7 @@ class ConfigTest extends \OxidTestCase
      */
     public function testGetShopUrlIsAdmin()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(true));
 
         $oConfig->init();
@@ -1701,7 +1691,7 @@ class ConfigTest extends \OxidTestCase
 
     public function testGetShopUrlByLanguageArray()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->init();
         $oConfig->setConfigParam('aLanguageURLs', array(5 => 'http://www.example.com/'));
@@ -1710,7 +1700,7 @@ class ConfigTest extends \OxidTestCase
 
     public function testGetShopUrlByLanguageArrayAddsEndingSlash()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->init();
         $oConfig->setConfigParam('aLanguageURLs', array(5 => 'http://www.example.com'));
@@ -1719,7 +1709,7 @@ class ConfigTest extends \OxidTestCase
 
     public function testGetShopUrlByMallUrl()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->init();
 
@@ -1730,7 +1720,7 @@ class ConfigTest extends \OxidTestCase
 
     public function testGetShopUrlByMallUrlAddsEndingSlash()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->init();
 
@@ -1741,7 +1731,7 @@ class ConfigTest extends \OxidTestCase
 
     public function testGetShopUrlDefaultUrl()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->init();
         $oConfig->setConfigParam('aLanguageURLs', null);
@@ -1762,20 +1752,17 @@ class ConfigTest extends \OxidTestCase
         $oConfig->init();
         //$oConfig->setNonPublicVar( '_iLanguageId', null );
         $this->assertEquals( 1, $oConfig->getShopLanguage() );
-
         $this->setRequestParameter( 'changelang', null );
         $this->setRequestParameter( 'lang', 1 );
         $oConfig = oxNew('oxConfig');
         $oConfig->init();
         $this->assertEquals( 1, $oConfig->getShopLanguage() );
-
         $this->setRequestParameter( 'changelang', null );
         $this->setRequestParameter( 'lang',       null );
         $this->setRequestParameter( 'tpllanguage', 1 );
         $oConfig = oxNew('oxConfig');
         $oConfig->init();
         $this->assertEquals( 1, $oConfig->getShopLanguage() );
-
         $this->setRequestParameter( 'changelang',  null );
         $this->setRequestParameter( 'lang',        null );
         $this->setRequestParameter( 'tpllanguage', null );
@@ -1783,7 +1770,6 @@ class ConfigTest extends \OxidTestCase
         $oConfig = oxNew('oxConfig');
         $oConfig->init();
         $this->assertEquals( 1, $oConfig->getShopLanguage() );
-
         $this->setRequestParameter( 'changelang',  null );
         $this->setRequestParameter( 'lang',        null );
         $this->setRequestParameter( 'tpllanguage', null );
@@ -1808,7 +1794,6 @@ class ConfigTest extends \OxidTestCase
         $oConfig->expects( $this->any() )->method( 'isAdmin' )->will( $this->returnValue( false ) );
         $oConfig->init();
         $oConfig->setConfigParam( 'aLanguageURLs', array( 1 => 'xxx' ) );
-
         $this->assertEquals( 1, $oConfig->getShopLanguage() );
     }
     */
@@ -1912,7 +1897,7 @@ class ConfigTest extends \OxidTestCase
         $sFEdition = $this->getConfig()->getFullEdition();
         $this->assertEquals("Community Edition", $sFEdition);
 
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getEdition'));
+        $oConfig = $this->getMock(Config::class, array('getEdition'));
         $oConfig->expects($this->any())->method('getEdition')->will($this->returnValue("Test Edition"));
         $this->assertEquals("Test Edition", $oConfig->getFullEdition());
     }
@@ -1939,7 +1924,7 @@ class ConfigTest extends \OxidTestCase
         $sTestDir = $vfsStreamWrapper->getRootPath();
 
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getOutDir'));
+        $oConfig = $this->getMock(Config::class, array('getOutDir'));
         $oConfig->expects($this->any())->method('getOutDir')->will($this->returnValue($sTestDir . 'out/'));
         $oConfig->init();
 
@@ -1956,7 +1941,7 @@ class ConfigTest extends \OxidTestCase
         $sTestDir = $vfsStreamWrapper->getRootPath();
 
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getOutDir'));
+        $oConfig = $this->getMock(Config::class, array('getOutDir'));
         $oConfig->expects($this->any())->method('getOutDir')->will($this->returnValue($sTestDir . 'out/'));
         $oConfig->init();
 
@@ -1973,7 +1958,7 @@ class ConfigTest extends \OxidTestCase
         $sTestDir = $vfsStreamWrapper->getRootPath();
 
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getOutDir'));
+        $oConfig = $this->getMock(Config::class, array('getOutDir'));
         $oConfig->expects($this->any())->method('getOutDir')->will($this->returnValue($sTestDir . 'out/'));
         $oConfig->init();
 
@@ -1990,7 +1975,7 @@ class ConfigTest extends \OxidTestCase
         $sTestDir = $vfsStreamWrapper->getRootPath();
 
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getOutDir'));
+        $oConfig = $this->getMock(Config::class, array('getOutDir'));
         $oConfig->expects($this->any())->method('getOutDir')->will($this->returnValue($sTestDir . 'out/'));
         $oConfig->init();
 
@@ -2007,7 +1992,7 @@ class ConfigTest extends \OxidTestCase
         $sTestDir = $vfsStreamWrapper->getRootPath();
 
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getOutDir'));
+        $oConfig = $this->getMock(Config::class, array('getOutDir'));
         $oConfig->expects($this->any())->method('getOutDir')->will($this->returnValue($sTestDir . 'out/'));
         $oConfig->init();
 
@@ -2024,7 +2009,7 @@ class ConfigTest extends \OxidTestCase
         $sTestDir = $vfsStreamWrapper->getRootPath();
 
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getOutDir'));
+        $oConfig = $this->getMock(Config::class, array('getOutDir'));
         $oConfig->expects($this->any())->method('getOutDir')->will($this->returnValue($sTestDir . 'out/'));
         $oConfig->init();
 
@@ -2039,7 +2024,7 @@ class ConfigTest extends \OxidTestCase
         $expectedResult = 'someEditionTemplateResponse';
 
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $config */
-        $config = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getEditionTemplate'));
+        $config = $this->getMock(Config::class, array('getEditionTemplate'));
         $config->expects($this->any())->method('getEditionTemplate')->will($this->returnValue($expectedResult));
         $config->init();
 
@@ -2057,7 +2042,7 @@ class ConfigTest extends \OxidTestCase
 
     public function testGetOutUrl()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isAdmin', 'getShopUrl'));
+        $oConfig = $this->getMock(Config::class, array('isAdmin', 'getShopUrl'));
         $oConfig->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         $oConfig->expects($this->any())->method('getShopUrl')->will($this->returnValue('testUrl/'));
         $oConfig->init();
@@ -2066,7 +2051,7 @@ class ConfigTest extends \OxidTestCase
 
     public function testGetOutUrlSsl()
     {
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isSsl', 'getSslShopUrl'));
+        $oConfig = $this->getMock(Config::class, array('isSsl', 'getSslShopUrl'));
         $oConfig->expects($this->any())->method('isSsl')->will($this->returnValue(true));
         $oConfig->expects($this->any())->method('getSslShopUrl')->will($this->returnValue('sslUrl/'));
         $oConfig->init();
@@ -2141,7 +2126,7 @@ class ConfigTest extends \OxidTestCase
         $oConfig = oxNew('oxConfig');
         $oConfig->init();
         $oConfig->setConfigParam('blFormerTplSupport', true);
-        $this->assertContains('nopic.jpg', $oConfig->getPictureUrl("test.gif", false));
+        $this->assertStringContainsString('nopic.jpg', $oConfig->getPictureUrl("test.gif", false));
     }
 
     public function testGetPictureUrlNeverEmptyString()
@@ -2150,7 +2135,7 @@ class ConfigTest extends \OxidTestCase
         $oConfig->init();
         $oConfig->setConfigParam('blFormerTplSupport', true);
         $this->assertNotEquals('', $oConfig->getPictureUrl("test.gif", false));
-        $this->assertContains('master/nopic.jpg', $oConfig->getPictureUrl("test.gif", false));
+        $this->assertStringContainsString('master/nopic.jpg', $oConfig->getPictureUrl("test.gif", false));
     }
 
     public function testgetPictureUrlForBugEntry0001557()
@@ -2373,7 +2358,7 @@ class ConfigTest extends \OxidTestCase
         $this->setConfigParam('sShopDir', dirname($file));
 
         /** @var oxConfig $config */
-        $config = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('init'));
+        $config = $this->getMock(Config::class, array('init'));
         $config->_loadVarsFromFile();
 
         $this->assertSame("customValue", $config->getConfigParam("customVar"));
@@ -2385,7 +2370,7 @@ class ConfigTest extends \OxidTestCase
     public function testInit_noValuesFromConfig()
     {
         /** @var oxconfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('_loadVarsFromDb', '_handleDbConnectionException'));
+        $oConfig = $this->getMock(Config::class, array('_loadVarsFromDb', '_handleDbConnectionException'));
         $oConfig->expects($this->once())->method('_loadVarsFromDb')->will($this->returnValue(false));
         $oConfig->expects($this->once())->method('_handleDbConnectionException');
         $oConfig->setConfigParam('iDebug', -1);
@@ -2399,7 +2384,7 @@ class ConfigTest extends \OxidTestCase
     public function testInit_noShopId()
     {
         /** @var oxconfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getShopId', '_handleDbConnectionException'));
+        $oConfig = $this->getMock(Config::class, array('getShopId', '_handleDbConnectionException'));
         $oConfig->expects($this->once())->method('getShopId')->will($this->returnValue(false));
         $oConfig->expects($this->once())->method('_handleDbConnectionException');
         $oConfig->setConfigParam('iDebug', -1);
@@ -2505,7 +2490,7 @@ class ConfigTest extends \OxidTestCase
     }
 
     /**
-     * @covers \OxidEsales\EshopCommunity\Core\Config::getExceptionHandler()
+     * @covers \OxidEsales\Eshop\Core\Config::getExceptionHandler()
      */
     public function testGetExceptionHandlerReturnsInstanceOfExceptionHandler()
     {
@@ -2523,7 +2508,7 @@ class ConfigTest extends \OxidTestCase
     protected function getConfigWithSslMocked()
     {
         /** @var oxConfig|PHPUnit\Framework\MockObject\MockObject $oConfig */
-        $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('isSsl', 'getSslShopUrl'));
+        $oConfig = $this->getMock(Config::class, array('isSsl', 'getSslShopUrl'));
         $oConfig->expects($this->any())->method('isSsl')->will($this->returnValue(true));
         $oConfig->expects($this->any())->method('getSslShopUrl')->will($this->returnValue($this->getConfigParam('sSSLShopURL')));
         $oConfig->setConfigParam('sSSLShopURL', 'https://testUrl/');

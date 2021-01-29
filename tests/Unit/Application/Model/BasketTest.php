@@ -2461,7 +2461,7 @@ class BasketTest extends \OxidTestCase
         $this->assertTrue($oProdPrice instanceof pricelist);
 
         $this->assertEquals(20 * 19, $oProdPrice->getBruttoSum(), 'brutto sum');
-        $this->assertEquals(20 * 19 / 1.19, $oProdPrice->getNettoSum(), 'netto sum', 0.01);
+        $this->assertEqualsWithDelta(20 * 19 / 1.19, $oProdPrice->getNettoSum(), 0.01, 'netto sum');
         $this->assertEquals(array(19 => 20 * 19 - 20 * 19 / 1.19), $oProdPrice->getVatInfo(false), 'get vat info');
         $this->assertEquals(array(19 => 20 * 19), $oProdPrice->getPriceInfo(), 'get price info');
         $this->assertEquals(19, $oProdPrice->getMostUsedVatPercent());

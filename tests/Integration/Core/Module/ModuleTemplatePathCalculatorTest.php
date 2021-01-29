@@ -146,7 +146,7 @@ class ModuleTemplatePathFormatterTest extends UnitTestCase
             $templatePathCalculator->calculateModuleTemplatePath('someTemplateName.tpl');
             $this->fail('An exception should have been thrown');
         } catch (\OxidEsales\Eshop\Core\Exception\StandardException $exception) {
-            $this->assertRegExp("@^Cannot find template@i", $exception->getMessage());
+            $this->assertMatchesRegularExpression("@^Cannot find template@i", $exception->getMessage());
         }
     }
 

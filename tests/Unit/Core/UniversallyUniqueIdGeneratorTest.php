@@ -32,7 +32,7 @@ class UniversallyUniqueIdGeneratorTest extends \OxidTestCase
         $oGenerator = oxNew('oxUniversallyUniqueIdGenerator');
         $sId = $oGenerator->generate();
 
-        $this->assertRegExp('/^[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}$/', $sId);
+        $this->assertMatchesRegularExpression('/^[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}$/', $sId);
     }
 
     public function testUUIDV4Uniqueness()
@@ -76,7 +76,7 @@ class UniversallyUniqueIdGeneratorTest extends \OxidTestCase
         $oGenerator = oxNew('oxUniversallyUniqueIdGenerator');
         $sId = $oGenerator->generateV4();
 
-        $this->assertRegExp('/^[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}$/', $sId);
+        $this->assertMatchesRegularExpression('/^[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}$/', $sId);
     }
 
     /**
@@ -130,6 +130,6 @@ class UniversallyUniqueIdGeneratorTest extends \OxidTestCase
         $oGenerator = oxNew('oxUniversallyUniqueIdGenerator');
         $sId = $oGenerator->generateV5('seed', 'salt');
 
-        $this->assertRegExp('/^[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}$/', $sId);
+        $this->assertMatchesRegularExpression('/^[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}$/', $sId);
     }
 }

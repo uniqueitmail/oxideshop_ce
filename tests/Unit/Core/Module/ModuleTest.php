@@ -508,6 +508,7 @@ class ModuleTest extends \OxidTestCase
      */
     public function testGetSmartyPluginDirectoriesWithInvalidValue($invalidValue)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $module = oxNew(Module::class);
         $module->setModuleData(['smartyPluginDirectories' => $invalidValue]);
 
