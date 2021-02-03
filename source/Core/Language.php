@@ -1373,7 +1373,9 @@ class Language extends \OxidEsales\Eshop\Core\Base
         if (is_array($aLangParams)) {
             $aIds = $this->_getLanguageIdsFromLanguageParamsArray($aLangParams);
         } else {
-            $aIds = $this->_getLanguageIdsFromLanguagesArray($oConfig->getConfigParam('aLanguages'));
+            $aIds = $this->_getLanguageIdsFromLanguagesArray(
+                $oConfig->getConfigParam('aLanguages') ? $oConfig->getConfigParam('aLanguages') : []
+            );
         }
 
         return $aIds;
@@ -1479,7 +1481,7 @@ class Language extends \OxidEsales\Eshop\Core\Base
      * @return array
      * @deprecated underscore prefix violates PSR12, will be renamed to "getLanguageIdsFromLanguagesArray" in next major
      */
-    protected function _getLanguageIdsFromLanguagesArray($aLanguages) // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+    protected function _getLanguageIdsFromLanguagesArray(array $aLanguages) // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     {
         return array_keys($aLanguages);
     }
