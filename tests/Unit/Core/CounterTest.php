@@ -1,17 +1,17 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
-namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 
-use \oxDb;
+namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 
 class CounterTest extends \OxidTestCase
 {
     protected function tearDown(): void
     {
-        oxDb::getDb("delete from oxcounters");
+        \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->execute('delete from oxcounters');
 
         parent::tearDown();
     }

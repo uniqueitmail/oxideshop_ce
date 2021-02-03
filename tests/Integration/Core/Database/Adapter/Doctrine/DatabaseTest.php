@@ -111,6 +111,9 @@ class DatabaseTest extends DatabaseInterfaceImplementationTest
                '"' . self::FIXTURE_OXID_2 . '",' .
                '"' . self::FIXTURE_OXID_3 . '"' .
                ')';
+        if (0 > $offset) {
+            $this->expectException(\InvalidArgumentException::class);
+        }
         $resultSet = $this->database->selectLimit($sql, $rowCount, $offset);
         $this->assertError(
             E_USER_DEPRECATED,
@@ -366,6 +369,7 @@ class DatabaseTest extends DatabaseInterfaceImplementationTest
     {
         $this->loadFixtureToTestTable();
 
+        $this->expectException(\TypeError::class);
         $actualQuotedValue = $this->database->quote($value);
         $this->assertSame($expectedQuotedValue, $actualQuotedValue, $message);
 
