@@ -409,7 +409,7 @@ class LanguageMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
                 //show warning
                 echo $oEx->getMessage();
             }
-            
+
             $oEx = oxNew(\OxidEsales\Eshop\Core\Exception\ExceptionToDisplay::class);
             $oEx->setMessage('LANGUAGE_ERROR_ADDING_MULTILANG_FIELDS');
             \OxidEsales\Eshop\Core\Registry::getUtilsView()->addErrorToDisplay($oEx);
