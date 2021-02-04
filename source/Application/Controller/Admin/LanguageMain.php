@@ -406,16 +406,16 @@ class LanguageMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
         } catch (Exception $oEx) {
             if ($oEx->getMessage() !== 'There is no active transaction') {
                 \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->rollbackTransaction();
-                //show warning
-                echo $oEx->getMessage();
             }
+            //show warning
+            echo $oEx->getMessage();
 
             $oEx = oxNew(\OxidEsales\Eshop\Core\Exception\ExceptionToDisplay::class);
             $oEx->setMessage('LANGUAGE_ERROR_ADDING_MULTILANG_FIELDS');
             \OxidEsales\Eshop\Core\Registry::getUtilsView()->addErrorToDisplay($oEx);
-
-            return;
         }
+
+        return;
     }
 
     /**
